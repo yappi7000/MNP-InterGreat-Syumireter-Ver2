@@ -524,9 +524,17 @@ function computeLine(line){
   const totalMonths = months.length;
 
   function planPriceForMonth(mIdx){
-    let price = 0;
-    for(const p of line.plans){ if(p.from<=mIdx) price = p.price; }
+    if(!line.plans || line.plans.length === 0) return 0;
+    let price = Number(line.plans[0].price) || 0;
+    for(let i = 1; i < line.plans.length; i++){
+      const p = line.plans[i];
+      const fromMonth = Number(p.from) || 2;
+      if(mIdx >= fromMonth){
+        price = Number(p.price) || 0;
+      }
+    }
     return price;
+  }
   }
   function optionCostForMonth(o, mInfo){
     if(mInfo.index > o.months) return 0;
