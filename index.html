@@ -162,8 +162,8 @@
 &lt;style&gt;
 :root{color-scheme:dark;--bg:#080e1d;--panel:#111c30;--border:#293954;--ink:#f2f6ff;--muted:#b0bdd1;--cyan:#68edff;--pink:#ff67a7;--red:#ff8b9c}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 65% 0%,#14244a 0%,var(--bg) 58%);font:15px/1.55 Inter,&quot;Hiragino Sans&quot;,Meiryo,system-ui,sans-serif;color:var(--ink)}main,header&gt;div,footer{width:min(1240px,calc(100% - 36px));margin:auto}header{border-bottom:1px solid var(--border)}header&gt;div{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0}a{color:var(--cyan)}.brand{font-weight:900;letter-spacing:.04em}.brand span{color:var(--cyan)}.hero{margin:26px 0 20px;padding:clamp(20px,4vw,52px);border:1px solid #364d78;border-radius:24px;display:grid;grid-template-columns:minmax(0,1fr) minmax(110px,30%);gap:20px;align-items:center;overflow:hidden;background:radial-gradient(ellipse at 85% 50%,#354b8a,transparent 58%),repeating-linear-gradient(90deg,transparent 0 35px,#8ccfff10 36px 37px),linear-gradient(115deg,#101b38,#121e40)}.hero img{width:min(100%,245px);aspect-ratio:1;object-fit:cover;justify-self:center;border-radius:50%;border:4px solid #ff67a7;box-shadow:0 0 34px #fd5ab564}.hero h1{font-size:clamp(32px,6vw,72px);line-height:1.08;letter-spacing:-.06em;margin:9px 0}.hero h1 span{color:var(--cyan)}.hero p{margin:0;color:#d3e2ff}.eyebrow{color:var(--pink);font-weight:800;letter-spacing:.07em}section,details{margin:16px 0;padding:clamp(15px,2.2vw,25px);background:var(--panel);border:1px solid var(--border);border-radius:16px}h2{margin:0 0 13px;font-size:21px}h3{margin:0;font-size:17px}.topgrid,.metrics,.carriers,.fields{display:grid;gap:11px}.topgrid,.fields{grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr))}.metrics,.carriers{grid-template-columns:repeat(4,minmax(0,1fr))}.metric,.card{min-width:0;background:#0d1729;border:1px solid var(--border);border-radius:12px;padding:13px}.metric small{display:block;color:var(--muted)}.metric strong{display:block;font-size:clamp(16px,2.2vw,29px);line-height:1.3;margin-top:4px;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}.metric.primary{border-color:#4cc2d5;background:#102a3d}.primary strong,.good{color:var(--cyan)}.bad{color:var(--red)!important}.card{border-top:3px solid var(--accent)}.card .subtotal{margin:10px 0;color:var(--accent)}.card .subtotal strong{display:block;font-size:21px;overflow-wrap:anywhere}.card label{display:grid;grid-template-columns:minmax(0,1fr) minmax(71px,90px);gap:5px;align-items:center;margin:5px 0;font-size:12px}.card .plan{color:var(--muted);min-height:38px;font-size:12px;display:block}.fields label,.topgrid label{display:grid;gap:4px}.check{display:flex;align-items:center;gap:8px;margin:12px 0}.check input{width:auto;accent-color:var(--cyan)}input,select,button{font:inherit}input,select{width:100%;min-width:0;padding:7px 8px;border:1px solid #455575;border-radius:7px;color:var(--ink);background:#182643}input:disabled{opacity:.62}input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}button,.jump{border:1px solid var(--border);border-radius:8px;padding:8px 12px;background:#1d3254;color:var(--ink);cursor:pointer;text-decoration:none}.jump{display:inline-block;margin-top:14px;background:var(--cyan);color:#071421;border:0;font-weight:850}.muted,footer{color:var(--muted);font-size:13px}.muted{margin:8px 0 0}.summary-row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}.summary-row h2{margin:0}.tablewrap{overflow:auto;margin-top:12px}table{width:100%;border-collapse:collapse;white-space:nowrap;font-variant-numeric:tabular-nums}th,td{padding:9px;text-align:right;border-bottom:1px solid var(--border)}th:first-child,td:first-child{text-align:left}thead{background:#1e3356}tbody tr:nth-child(even){background:#14223a}summary{cursor:pointer;font-weight:800}footer{padding:12px 0 28px}.estimate{margin-top:12px}.estimate .metric{padding:9px 12px}.estimate .metric strong{font-size:19px}.block{margin-top:13px}.card dl{margin:10px 0 0;border-top:1px solid var(--border);padding-top:6px;font-size:12px}.card dl div{display:flex;justify-content:space-between;gap:5px}.card dd{margin:0;text-align:right}
 @media(max-width:980px){.carriers{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){main,header&gt;div,footer{width:calc(100% - 24px)}.hero{gap:10px;padding:16px;grid-template-columns:minmax(0,1fr) 90px;margin-top:14px}.hero h1{font-size:clamp(27px,7.3vw,36px)}.hero img{border-width:2px}.hero p{font-size:12px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.carriers{grid-template-columns:1fr}.card label{grid-template-columns:1fr 110px}.card .plan{min-height:auto}.summary-row{align-items:start}}
-&lt;/style&gt;&lt;/head&gt;
-&lt;body&gt;&lt;main&gt;&lt;section id=&quot;conditions&quot;&gt;&lt;h1 style=&quot;font-size:24px;margin:0 0 10px&quot;&gt;4社の手残り比較&lt;/h1&gt;&lt;h2&gt;回線数の目安&lt;/h2&gt;&lt;div class=&quot;topgrid&quot;&gt;&lt;label&gt;名義人の人数&lt;input id=&quot;owners&quot; type=&quot;number&quot; min=&quot;0&quot; max=&quot;30&quot; step=&quot;1&quot; value=&quot;2&quot;&gt;&lt;/label&gt;&lt;label&gt;名義人以外の使用者&lt;input id=&quot;users&quot; type=&quot;number&quot; min=&quot;0&quot; max=&quot;60&quot; step=&quot;1&quot; value=&quot;2&quot;&gt;&lt;/label&gt;&lt;/div&gt;&lt;div id=&quot;documents&quot; class=&quot;fields block&quot;&gt;&lt;/div&gt;&lt;div id=&quot;estimates&quot; class=&quot;metrics estimate&quot;&gt;&lt;/div&gt;&lt;p class=&quot;muted&quot; id=&quot;estimate-note&quot;&gt;&lt;/p&gt;&lt;p class=&quot;muted&quot;&gt;録画のルールを再現した目安です。既存契約や審査、店頭の受付・本人確認条件で実際の契約数は変わります。契約予定の回線数を直接入力するには、下のチェックを外してください。&lt;/p&gt;&lt;label class=&quot;check&quot;&gt;&lt;input type=&quot;checkbox&quot; id=&quot;linked&quot; checked&gt;回線数の目安を各社の試算に使う&lt;/label&gt;&lt;label class=&quot;check&quot;&gt;&lt;input type=&quot;checkbox&quot; id=&quot;exclude&quot;&gt;共通費用を引く前に赤字のキャリアを試算から外す&lt;/label&gt;&lt;/section&gt;
+.estimate .metric label{display:block;margin-top:8px;font-size:13px}.estimate .metric .omit-check{display:flex;align-items:center;gap:5px}.omit-check input{width:auto;accent-color:var(--cyan)}.estimate input[type=number]{margin-top:3px}&lt;/style&gt;&lt;/head&gt;
+&lt;body&gt;&lt;main&gt;&lt;section id=&quot;conditions&quot;&gt;&lt;h1 style=&quot;font-size:24px;margin:0 0 10px&quot;&gt;4社の手残り比較&lt;/h1&gt;&lt;h2&gt;回線数の目安&lt;/h2&gt;&lt;div class=&quot;topgrid&quot;&gt;&lt;label&gt;名義人の人数&lt;input id=&quot;owners&quot; type=&quot;number&quot; min=&quot;0&quot; max=&quot;30&quot; step=&quot;1&quot; value=&quot;2&quot;&gt;&lt;/label&gt;&lt;label&gt;名義人以外の使用者&lt;input id=&quot;users&quot; type=&quot;number&quot; min=&quot;0&quot; max=&quot;60&quot; step=&quot;1&quot; value=&quot;2&quot;&gt;&lt;/label&gt;&lt;/div&gt;&lt;div id=&quot;documents&quot; class=&quot;fields block&quot;&gt;&lt;/div&gt;&lt;div id=&quot;estimates&quot; class=&quot;metrics estimate&quot;&gt;&lt;/div&gt;&lt;p class=&quot;muted&quot; id=&quot;estimate-note&quot;&gt;&lt;/p&gt;&lt;p class=&quot;muted&quot;&gt;録画のルールを再現した目安です。既存契約や審査、店頭の受付・本人確認条件で実際の契約数は変わります。目安は自動で入力されます。契約予定の本数に直すと、そのキャリアだけ手入力を優先します。&lt;/p&gt;&lt;button type=&quot;button&quot; class=&quot;block&quot; id=&quot;use-estimates&quot;&gt;回線数を目安に戻す&lt;/button&gt;&lt;label class=&quot;check&quot;&gt;&lt;input type=&quot;checkbox&quot; id=&quot;exclude&quot;&gt;共通費用を引く前に赤字のキャリアを試算から外す&lt;/label&gt;&lt;/section&gt;
 &lt;section id=&quot;results&quot;&gt;&lt;div class=&quot;summary-row&quot;&gt;&lt;h2&gt;試算結果&lt;/h2&gt;&lt;button id=&quot;reset&quot; type=&quot;button&quot;&gt;初期値に戻す&lt;/button&gt;&lt;/div&gt;&lt;div class=&quot;metrics&quot; id=&quot;metrics&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;&lt;p class=&quot;muted&quot; id=&quot;summary-note&quot;&gt;&lt;/p&gt;&lt;/section&gt;
 &lt;details open&gt;&lt;summary&gt;4社共通の設定&lt;/summary&gt;&lt;p class=&quot;muted&quot;&gt;入力した項目だけ4社に反映します。各社カードで個別に上書きできます。&lt;/p&gt;&lt;div class=&quot;fields block&quot; id=&quot;common&quot;&gt;&lt;/div&gt;&lt;button class=&quot;block&quot; id=&quot;apply&quot; type=&quot;button&quot;&gt;入力した値を4社に反映&lt;/button&gt;&lt;span class=&quot;muted&quot; id=&quot;apply-status&quot; role=&quot;status&quot;&gt;&lt;/span&gt;&lt;/details&gt;
 &lt;section&gt;&lt;h2&gt;キャリア別の条件と内訳&lt;/h2&gt;&lt;p class=&quot;muted&quot; style=&quot;margin-bottom:12px&quot;&gt;基本料は2026年11月16日確認。割引・還元・オプションは実際の適用条件に合わせて入力してください。回線数の目安は録画の試算ルールです。初月料金を別に入れる場合、維持月数には初月を除いた満額月数を入れます。プラン・窓口・オプション料金を変えると還元額欄を空欄に戻します。ポイント等を入れる場合はご自身が見込む価値で入力してください。解約金は新規契約から所定期間内の初期値なので、対象外なら0円に変更してください。&lt;/p&gt;&lt;div class=&quot;carriers&quot; id=&quot;carriers&quot;&gt;&lt;/div&gt;&lt;/section&gt;
@@ -208,7 +208,7 @@ function calculate(data,extra,exclude,months){
   const duration=months??row.months;
   const perCost=monthly*duration+Math.max(0,duration-row.free)*row.ongoing+row.fee+row.option+row.first+row.cancel+row.purchase;
   const perNet=perIncome-perCost;
-  const omitted=exclude&amp;&amp;perNet&lt;0&amp;&amp;row.lines&gt;0;
+  const omitted=row.skip?&quot;manual&quot;:exclude&amp;&amp;perNet&lt;0&amp;&amp;row.lines&gt;0?&quot;loss&quot;:&quot;&quot;;
   const lines=omitted?0:row.lines;
   return {monthly,perCost,perNet,omitted,lines,income:perIncome*lines,cost:perCost*lines,net:perNet*lines};
  });
@@ -223,8 +223,7 @@ function metrics(host,data){
  host.innerHTML=data.map(([label,value,cls=&quot;&quot;])=&gt;&#x27;&lt;div class=&quot;metric &#x27;+cls+&#x27;&quot;&gt;&lt;small&gt;&#x27;+label+&#x27;&lt;/small&gt;&lt;strong&gt;&#x27;+value+&#x27;&lt;/strong&gt;&lt;/div&gt;&#x27;).join(&quot;&quot;);
 }
 const docChoices=[];
-let manualLines=defaults.map(row=&gt;row.lines);
-let wasLinked=true;
+const editedLines=new Set();
 function updateDocumentFields(owners){
  const host=$(&quot;documents&quot;);
  host.querySelectorAll(&quot;select&quot;).forEach((el,i)=&gt;{docChoices[i]=el.value;});
@@ -243,6 +242,7 @@ function updateDocumentFields(owners){
  }
 }
 function init(){
+ $(&quot;estimates&quot;).innerHTML=names.map((name,i)=&gt;&#x27;&lt;div class=&quot;metric&quot;&gt;&lt;small&gt;&#x27;+name+&#x27;&lt;/small&gt;&lt;strong id=&quot;estimate-&#x27;+i+&#x27;&quot;&gt;&lt;/strong&gt;&#x27;+field(&quot;planned-&quot;+i,&quot;試算する回線数&quot;,&quot;lines&quot;)+&#x27;&lt;label class=&quot;omit-check&quot;&gt;&lt;input type=&quot;checkbox&quot; id=&quot;skip-&#x27;+i+&#x27;&quot;&gt;計算から除外&lt;/label&gt;&lt;/div&gt;&#x27;).join(&quot;&quot;);
  $(&quot;common&quot;).innerHTML=inputs.filter(([key])=&gt;key!==&quot;lines&quot;).map(([key,label])=&gt;field(&quot;common-&quot;+key,label,key)).join(&quot;&quot;);
  $(&quot;extras&quot;).innerHTML=extraInputs.map(([key,label])=&gt;field(key,label,key,extraDefaults[key])).join(&quot;&quot;);
  $(&quot;carriers&quot;).innerHTML=names.map((name,i)=&gt;&#x27;&lt;article class=&quot;card&quot; style=&quot;--accent:&#x27;+colors[i]+&#x27;&quot;&gt;&lt;h3&gt;&#x27;+name+&#x27;&lt;/h3&gt;&lt;p class=&quot;plan&quot;&gt;&#x27;+optionHints[i]+&#x27;&lt;br&gt;&#x27;+discountHints[i]+&#x27;&lt;br&gt;&lt;a href=&quot;&#x27;+planLinks[i]+&#x27;&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;公式料金&lt;/a&gt;&#x27;+(offerLinks[i]?&#x27; ／ &lt;a href=&quot;&#x27;+offerLinks[i]+&#x27;&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;公式オンライン特典&lt;/a&gt;&#x27;:&#x27;&#x27;)+&#x27;&lt;/p&gt;&lt;label for=&quot;plan-&#x27;+i+&#x27;&quot;&gt;料金プラン&lt;select id=&quot;plan-&#x27;+i+&#x27;&quot;&gt;&#x27;+plans[i].map(([label],index)=&gt;&#x27;&lt;option value=&quot;&#x27;+index+&#x27;&quot;&gt;&#x27;+label+&#x27;&lt;/option&gt;&#x27;).join(&quot;&quot;)+&#x27;&lt;/select&gt;&lt;/label&gt;&lt;label for=&quot;channel-&#x27;+i+&#x27;&quot;&gt;申込窓口&lt;select id=&quot;channel-&#x27;+i+&#x27;&quot;&gt;&lt;option value=&quot;store&quot;&gt;店頭&lt;/option&gt;&lt;option value=&quot;web&quot;&gt;公式オンライン&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;&lt;div class=&quot;subtotal&quot;&gt;キャリア別の手残り&lt;strong id=&quot;net-&#x27;+i+&#x27;&quot;&gt;&lt;/strong&gt;&lt;/div&gt;&#x27;+inputs.map(([key,label])=&gt;field(i+&quot;-&quot;+key,label,key,defaults[i][key])).join(&quot;&quot;)+&#x27;&lt;dl id=&quot;details-&#x27;+i+&#x27;&quot;&gt;&lt;/dl&gt;&lt;/article&gt;&#x27;).join(&quot;&quot;);
@@ -254,28 +254,28 @@ function refresh(){
  updateDocumentFields(owners);
  const licenses=[...$(&quot;documents&quot;).querySelectorAll(&quot;select&quot;)].filter(el=&gt;el.value===&quot;license&quot;).length;
  const counts=estimate(owners,users,licenses);
- metrics($(&quot;estimates&quot;),names.map((name,i)=&gt;[name,counts[i]+&quot;回線&quot;]));
+ counts.forEach((count,i)=&gt;{$(&quot;estimate-&quot;+i).textContent=&quot;目安 &quot;+count+&quot;回線&quot;;});
  $(&quot;estimate-note&quot;).textContent=&quot;使用者 合計 &quot;+(owners+users)+&quot;人 ／ 4社の目安 合計 &quot;+counts.reduce((a,b)=&gt;a+b,0)+&quot;回線&quot;;
- const linked=$(&quot;linked&quot;).checked;
  const extra=Object.fromEntries(extraInputs.map(([key])=&gt;[key,readInt($(key))]));
  const data=names.map((_,i)=&gt;{
+  const planned=$(&quot;planned-&quot;+i);
+  if(!editedLines.has(i))planned.value=counts[i];
   const lineInput=$(i+&quot;-lines&quot;);
-  if(linked&amp;&amp;!wasLinked)manualLines[i]=readInt(lineInput);
-  if(linked)lineInput.value=counts[i];
-  else if(wasLinked)lineInput.value=manualLines[i];
-  lineInput.disabled=linked;
-  return Object.fromEntries(inputs.map(([key])=&gt;[key,readInt($(i+&quot;-&quot;+key))]));
+  if(document.activeElement!==lineInput)lineInput.value=planned.value;
+  const row=Object.fromEntries(inputs.map(([key])=&gt;[key,readInt($(i+&quot;-&quot;+key))]));
+  row.lines=readInt(planned);
+  row.skip=$(&quot;skip-&quot;+i).checked;
+  return row;
  });
- wasLinked=linked;
  const exclude=$(&quot;exclude&quot;).checked;
  const result=calculate(data,extra,exclude);
  metrics($(&quot;metrics&quot;),[[&quot;実質手残り&quot;,&#x27;&lt;span class=&quot;&#x27;+tone(result.net)+&#x27;&quot;&gt;&#x27;+money(result.net)+&#x27;&lt;/span&gt;&#x27;,&quot;primary&quot;],[&quot;受取総額&quot;,money(result.income)],[&quot;総費用&quot;,money(result.cost)],[&quot;利益率&quot;,percent(result.net,result.income)]]);
- const unconfirmed=names.filter((_,i)=&gt;data[i].lines&gt;0&amp;&amp;$(i+&quot;-cb&quot;).value===&quot;&quot;);
+ const unconfirmed=names.filter((_,i)=&gt;result.carriers[i].lines&gt;0&amp;&amp;$(i+&quot;-cb&quot;).value===&quot;&quot;);
  $(&quot;summary-note&quot;).textContent=&quot;試算対象 &quot;+result.lines+&quot;回線 ／ 共通費用 &quot;+money(result.shared)+(unconfirmed.length?&quot; ／ 還元未入力（0円で仮計算） &quot;+unconfirmed.join(&quot;・&quot;):&quot;&quot;);
  result.carriers.forEach((row,i)=&gt;{
   const el=$(&quot;net-&quot;+i);
   el.className=tone(row.net);
-  el.textContent=row.omitted?&quot;赤字のため除外&quot;:money(row.net)+&quot; ／ &quot;+row.lines+&quot;回線&quot;;
+  el.textContent=row.omitted===&quot;manual&quot;?&quot;計算から除外&quot;:row.omitted===&quot;loss&quot;?&quot;赤字のため除外&quot;:money(row.net)+&quot; ／ &quot;+row.lines+&quot;回線&quot;;
   const values=[[&quot;割引後の月額&quot;,money(row.monthly)],[&quot;費用／回線&quot;,money(row.perCost)],[&quot;手残り／回線&quot;,money(row.perNet)],[&quot;受取総額&quot;,money(row.income)],[&quot;利益率&quot;,percent(row.net,row.income)]];
   $(&quot;details-&quot;+i).innerHTML=values.map(([label,val])=&gt;&quot;&lt;div&gt;&lt;dt&gt;&quot;+label+&quot;&lt;/dt&gt;&lt;dd&gt;&quot;+val+&quot;&lt;/dd&gt;&lt;/div&gt;&quot;).join(&quot;&quot;);
  });
@@ -288,7 +288,16 @@ function refresh(){
 init();
 refresh();
 document.addEventListener(&quot;input&quot;,event=&gt;{
- if(event.target.matches(&quot;input,select&quot;))refresh();
+ const el=event.target;
+ if(!el.matches(&quot;input,select&quot;))return;
+ const top=el.id.match(/^planned-(\d)$/);
+ const bottom=el.id.match(/^(\d)-lines$/);
+ const index=top?.[1]??bottom?.[1];
+ if(index!==undefined){
+  editedLines.add(Number(index));
+  if(bottom)$(&quot;planned-&quot;+index).value=el.value;
+ }
+ refresh();
 });
 document.addEventListener(&quot;change&quot;,event=&gt;{
  const [kind,index]=event.target.id.split(&quot;-&quot;);
@@ -308,6 +317,7 @@ document.addEventListener(&quot;change&quot;,event=&gt;{
  if([&quot;option&quot;,&quot;ongoing&quot;,&quot;free&quot;,&quot;base&quot;].includes(index)&amp;&amp;Number.isInteger(Number(kind)))$(kind+&quot;-cb&quot;).value=&quot;&quot;;
  if(event.target.type===&quot;number&quot;&amp;&amp;event.target.value!==&quot;&quot;){
   event.target.value=readInt(event.target);
+  if(index===&quot;lines&quot;)$(&quot;planned-&quot;+kind).value=event.target.value;
 
  }
  refresh();
@@ -329,15 +339,17 @@ $(&quot;apply&quot;).addEventListener(&quot;click&quot;,()=&gt;{
  $(&quot;apply-status&quot;).textContent=edited?&quot; &quot;+edited+&quot;項目を反映しました&quot;:&quot; 反映する項目を入力してください&quot;;
  refresh();
 });
+$(&quot;use-estimates&quot;).addEventListener(&quot;click&quot;,()=&gt;{
+ editedLines.clear();
+ refresh();
+});
 $(&quot;reset&quot;).addEventListener(&quot;click&quot;,()=&gt;{
  if(!window.confirm(&quot;入力を初期値に戻しますか？&quot;))return;
  $(&quot;owners&quot;).value=2;
  $(&quot;users&quot;).value=2;
  $(&quot;documents&quot;).replaceChildren();
  docChoices.length=0;
- manualLines=defaults.map(row=&gt;row.lines);
- wasLinked=true;
- $(&quot;linked&quot;).checked=true;
+ editedLines.clear();
  $(&quot;exclude&quot;).checked=false;
  $(&quot;apply-status&quot;).textContent=&quot;&quot;;
  init();
