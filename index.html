@@ -156,6 +156,24 @@
   </div>
 </div>
 
+<script>
+function calculateMnpBenefit(total, rounds, start, firstAmount, months) {
+  const count = Math.min(12, Math.max(1, Math.trunc(Number(rounds) || 1)));
+  const firstMonth = Math.max(1, Math.trunc(Number(start) || 1));
+  const received = Math.min(count, Math.max(0, months - firstMonth + 1));
+  if (received === 0) return 0;
+  if (received === count) return total;
+
+  const hasFirstAmount = firstAmount != null && firstAmount !== "";
+  const first = hasFirstAmount ? Math.max(0, Math.min(total, Math.trunc(Number(firstAmount) || 0))) : 0;
+  const remainder = total - first;
+  const remainingRounds = count - Number(hasFirstAmount);
+  const paidRounds = received - Number(hasFirstAmount);
+  return first + Math.floor(remainder / remainingRounds) * paidRounds
+    + Math.min(remainder % remainingRounds, paidRounds);
+}
+</script>
+
 <section id="yappiQuick" aria-label="4社の手残り比較" hidden>
 <iframe title="4社の手残り比較シミュレーター" srcdoc="&lt;!doctype html&gt;
 &lt;html lang=&quot;ja&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;meta name=&quot;description&quot; content=&quot;ドコモ・UQモバイル・ソフトバンク・ワイモバイルのMNP手残りを比較&quot;&gt;&lt;title&gt;MNP実質収支シミュレーター｜やっぴ〜 Presents&lt;/title&gt;
@@ -166,10 +184,10 @@
 &lt;body&gt;&lt;main&gt;&lt;section id=&quot;conditions&quot;&gt;&lt;h1 style=&quot;font-size:24px;margin:0 0 10px&quot;&gt;4社の手残り比較&lt;/h1&gt;&lt;h2&gt;回線数の目安&lt;/h2&gt;&lt;div class=&quot;topgrid&quot;&gt;&lt;label&gt;名義人の人数&lt;input id=&quot;owners&quot; type=&quot;number&quot; min=&quot;0&quot; max=&quot;30&quot; step=&quot;1&quot; value=&quot;2&quot;&gt;&lt;/label&gt;&lt;label&gt;名義人以外の使用者&lt;input id=&quot;users&quot; type=&quot;number&quot; min=&quot;0&quot; max=&quot;60&quot; step=&quot;1&quot; value=&quot;2&quot;&gt;&lt;/label&gt;&lt;/div&gt;&lt;div id=&quot;documents&quot; class=&quot;fields block&quot;&gt;&lt;/div&gt;&lt;div id=&quot;estimates&quot; class=&quot;metrics estimate&quot;&gt;&lt;/div&gt;&lt;p class=&quot;muted&quot; id=&quot;estimate-note&quot;&gt;&lt;/p&gt;&lt;p class=&quot;muted&quot;&gt;録画のルールを再現した目安です。既存契約や審査、店頭の受付・本人確認条件で実際の契約数は変わります。目安は自動で入力されます。契約予定の本数に直すと、そのキャリアだけ手入力を優先します。&lt;/p&gt;&lt;button type=&quot;button&quot; class=&quot;block&quot; id=&quot;use-estimates&quot;&gt;回線数を目安に戻す&lt;/button&gt;&lt;label class=&quot;check&quot;&gt;&lt;input type=&quot;checkbox&quot; id=&quot;exclude&quot;&gt;共通費用を引く前に赤字のキャリアを試算から外す&lt;/label&gt;&lt;/section&gt;
 &lt;section id=&quot;results&quot;&gt;&lt;div class=&quot;summary-row&quot;&gt;&lt;h2&gt;試算結果&lt;/h2&gt;&lt;button id=&quot;reset&quot; type=&quot;button&quot;&gt;初期値に戻す&lt;/button&gt;&lt;/div&gt;&lt;div class=&quot;metrics&quot; id=&quot;metrics&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;&lt;p class=&quot;muted&quot; id=&quot;summary-note&quot;&gt;&lt;/p&gt;&lt;/section&gt;
 &lt;details open&gt;&lt;summary&gt;4社共通の設定&lt;/summary&gt;&lt;p class=&quot;muted&quot;&gt;入力した項目だけ4社に反映します。各社カードで個別に上書きできます。&lt;/p&gt;&lt;div class=&quot;fields block&quot; id=&quot;common&quot;&gt;&lt;/div&gt;&lt;button class=&quot;block&quot; id=&quot;apply&quot; type=&quot;button&quot;&gt;入力した値を4社に反映&lt;/button&gt;&lt;span class=&quot;muted&quot; id=&quot;apply-status&quot; role=&quot;status&quot;&gt;&lt;/span&gt;&lt;/details&gt;
-&lt;section&gt;&lt;h2&gt;キャリア別の条件と内訳&lt;/h2&gt;&lt;p class=&quot;muted&quot; style=&quot;margin-bottom:12px&quot;&gt;基本料は2026年11月16日確認。割引・還元・オプションは実際の適用条件に合わせて入力してください。回線数の目安は録画の試算ルールです。初月料金を別に入れる場合、維持月数には初月を除いた満額月数を入れます。プラン・窓口・オプション料金を変えると還元額欄を空欄に戻します。ポイント等を入れる場合はご自身が見込む価値で入力してください。解約金は新規契約から所定期間内の初期値なので、対象外なら0円に変更してください。&lt;/p&gt;&lt;div class=&quot;carriers&quot; id=&quot;carriers&quot;&gt;&lt;/div&gt;&lt;/section&gt;
-&lt;details open&gt;&lt;summary&gt;home 5G・カード年会費などの共通費用&lt;/summary&gt;&lt;p class=&quot;muted&quot;&gt;その乗り換えで追加負担した分を入れます。全体の手残りから一度だけ引きます。&lt;/p&gt;&lt;div id=&quot;extras&quot; class=&quot;fields block&quot;&gt;&lt;/div&gt;&lt;/details&gt;
+&lt;section&gt;&lt;h2&gt;キャリア別の条件と内訳&lt;/h2&gt;&lt;p class=&quot;muted&quot; style=&quot;margin-bottom:12px&quot;&gt;基本料は2026年11月16日確認。割引・還元・オプションは実際の適用条件に合わせて入力してください。回線数の目安は録画の試算ルールです。初月料金を別に入れる場合、維持月数には初月を除いた満額月数を入れます。プラン・窓口・オプション料金を変えると還元額欄を空欄に戻します。ポイント等を入れる場合はご自身が見込む価値で入力してください。解約金は新規契約から所定期間内の初期値なので、対象外なら0円に変更してください。&lt;/p&gt;&lt;p class=&quot;muted&quot; style=&quot;margin-bottom:12px&quot;&gt;分割付与の試算では、毎月の付与回数を最大12回まで指定できます。12か月で毎月1回ずつ受け取る想定なら、付与回数を12、初回の付与月を1にしてください。付与月は維持月数の数え方に合わせて入力してください。初回の付与額を空欄にすると均等配分し、入力すると残りを均等配分します。1円未満の端数は前の月から配ります。料金割引型の特典を還元総額に入れる場合、同じ金額を月額割引にも入れると二重計上になります。&lt;/p&gt;&lt;div class=&quot;carriers&quot; id=&quot;carriers&quot;&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;details open&gt;&lt;summary&gt;home 5G・カード年会費などの共通費用&lt;/summary&gt;&lt;p class=&quot;muted&quot;&gt;案件全体で一度かかる手配料はここへ。1回線ごとにかかる手配料はキャリア別の「案件手配料／回線」に入れます。同じ手配料は該当する欄に一度だけ入力してください。&lt;/p&gt;&lt;div id=&quot;extras&quot; class=&quot;fields block&quot;&gt;&lt;/div&gt;&lt;/details&gt;
 &lt;details open&gt;&lt;summary&gt;維持月数ごとの比較（1〜12か月）&lt;/summary&gt;&lt;p class=&quot;muted&quot;&gt;全社の満額月数を同じにして比較します。共通の月額費用も連動し、赤字除外は月ごとに再判定します。解約金は各社の入力額を固定で使います。無料月数は維持月数に含まれる分を設定します。&lt;/p&gt;&lt;div class=&quot;tablewrap&quot; tabindex=&quot;0&quot; aria-label=&quot;維持月数ごとの手残り比較表&quot;&gt;&lt;table&gt;&lt;thead id=&quot;tablehead&quot;&gt;&lt;/thead&gt;&lt;tbody id=&quot;tablebody&quot;&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/details&gt;
-&lt;/main&gt;&lt;footer&gt;手残り ＝ キャッシュバック ＋ 端末売却額 − 回線費用 − 端末購入額 − 共通費用。利益率は手残り ÷ 受取総額。金額は円。&lt;/footer&gt;
+&lt;/main&gt;&lt;footer&gt;手残り ＝ キャッシュバック ＋ 端末売却額 − 回線費用 − 端末購入額 − 弾代 − 手配料 − その他の共通費用。利益率は手残り ÷ 受取総額。金額は円。&lt;/footer&gt;
 &lt;script&gt;
 &quot;use strict&quot;;
 const $=id=&gt;document.getElementById(id);
@@ -186,16 +204,21 @@ const offerLinks=[&quot;https://onlineshop.docomo.ne.jp/special/sim-campaign&quo
 const discountHints=[&quot;旧miniはみんなドコモ割の値引き対象外。mini2は2回線以上で550円引き。光またはhome 5Gは1,210円引き。&quot;,&quot;トクトク2は5GB以下1,100円引き。自宅1,100円／家族550円はどちらか一方。au PAYカード220円。&quot;,&quot;ミニフィット2は家族2回線220円／3回線以上550円。光1,100円、カード330円／ゴールド550円。&quot;,&quot;おうち割1,650円／家族割（副回線）1,100円はどちらか一方。カード330円／ゴールド最大770円。期間限定割引の重複条件に注意。&quot;];
 const optionHints=[&quot;通話5分 880円／かけ放題1,980円&quot;,&quot;増量オプションⅡ 550円（対象なら適用月から7か月無料）&quot;,&quot;通話5分 880円／かけ放題1,980円&quot;,&quot;データ増量 550円（対象なら6か月無料）／通話10分 880円（Lは基本料に含む）&quot;];
 const inputs=[
- [&quot;base&quot;,&quot;割引前の月額&quot;],[&quot;discount&quot;,&quot;月額割引の合計&quot;],[&quot;fee&quot;,&quot;事務手数料&quot;],[&quot;option&quot;,&quot;初月オプション実額&quot;],[&quot;ongoing&quot;,&quot;翌月以降オプション月額&quot;],[&quot;free&quot;,&quot;翌月以降の無料月数&quot;],[&quot;first&quot;,&quot;初月料金（日割り等）&quot;],[&quot;cancel&quot;,&quot;解約金&quot;],[&quot;cb&quot;,&quot;確認済みの還元額&quot;],[&quot;purchase&quot;,&quot;端末購入額&quot;],[&quot;sold&quot;,&quot;端末売却額&quot;],[&quot;months&quot;,&quot;維持月数&quot;],[&quot;lines&quot;,&quot;回線数&quot;]
+ [&quot;base&quot;,&quot;割引前の月額&quot;],[&quot;discount&quot;,&quot;月額割引の合計&quot;],[&quot;fee&quot;,&quot;事務手数料&quot;],[&quot;option&quot;,&quot;初月オプション実額&quot;],[&quot;ongoing&quot;,&quot;翌月以降オプション月額&quot;],[&quot;free&quot;,&quot;翌月以降の無料月数&quot;],[&quot;first&quot;,&quot;初月料金（日割り等）&quot;],[&quot;cancel&quot;,&quot;解約金&quot;],[&quot;cb&quot;,&quot;還元総額／回線&quot;],[&quot;sourceCost&quot;,&quot;弾代（乗り換え元回線の費用）&quot;],[&quot;arrangePerLine&quot;,&quot;案件手配料／回線&quot;],[&quot;purchase&quot;,&quot;端末購入額／回線&quot;],[&quot;sold&quot;,&quot;端末売却額／回線&quot;],[&quot;months&quot;,&quot;維持月数&quot;],[&quot;lines&quot;,&quot;回線数&quot;]
 ];
-const extraInputs=[[&quot;sharedMonthly&quot;,&quot;共通の月額費用&quot;],[&quot;sharedMonths&quot;,&quot;共通費用の月数&quot;],[&quot;sharedOnce&quot;,&quot;その他の一時費用&quot;],[&quot;dAnnual&quot;,&quot;dカード GOLD年会費／枚&quot;],[&quot;dCards&quot;,&quot;dカードの枚数&quot;],[&quot;pAnnual&quot;,&quot;PayPayカード ゴールド年会費／枚&quot;],[&quot;pCards&quot;,&quot;PayPayカードの枚数&quot;]];
+const benefitInputs=[
+ [&quot;rounds&quot;,&quot;毎月の付与回数（1＝一括）&quot;,1],
+ [&quot;start&quot;,&quot;初回の付与月（0＝契約時）&quot;,0],
+ [&quot;firstAmount&quot;,&quot;初回の付与額（任意）&quot;,&quot;&quot;]
+];
+const extraInputs=[[&quot;sharedMonthly&quot;,&quot;共通の月額費用&quot;],[&quot;sharedMonths&quot;,&quot;共通費用の月数&quot;],[&quot;arrangeOnce&quot;,&quot;案件手配料（案件全体で1回）&quot;],[&quot;sharedOnce&quot;,&quot;その他の一時費用&quot;],[&quot;dAnnual&quot;,&quot;dカード GOLD年会費／枚&quot;],[&quot;dCards&quot;,&quot;dカードの枚数&quot;],[&quot;pAnnual&quot;,&quot;PayPayカード ゴールド年会費／枚&quot;],[&quot;pCards&quot;,&quot;PayPayカードの枚数&quot;]];
 const defaults=names.map((_,i)=&gt;({base:plans[i][0][1],discount:0,fee:4950,option:0,ongoing:0,free:0,first:0,cancel:plans[i][0][2],cb:&quot;&quot;,purchase:0,sold:0,months:6,lines:[4,6,8,8][i]}));
-const extraDefaults={sharedMonthly:0,sharedMonths:6,sharedOnce:0,dAnnual:11000,dCards:0,pAnnual:11000,pCards:0};
+const extraDefaults={sharedMonthly:0,sharedMonths:6,sharedOnce:0,arrangeOnce:0,dAnnual:11000,dCards:0,pAnnual:11000,pCards:0};
 const intFormat=new Intl.NumberFormat(&quot;ja-JP&quot;);
 const money=n=&gt;intFormat.format(n)+&quot;円&quot;;
 const percent=(a,b)=&gt;b?(a/b*100).toFixed(1)+&quot;%&quot;:&quot;—&quot;;
 const tone=n=&gt;n&lt;0?&quot;bad&quot;:n&gt;0?&quot;good&quot;:&quot;&quot;;
-const maxFor=key=&gt;key===&quot;months&quot;||key===&quot;sharedMonths&quot;||key===&quot;free&quot;?120:[&quot;lines&quot;,&quot;dCards&quot;,&quot;pCards&quot;].includes(key)?1000:99999999;
+const maxFor=key=&gt;key===&quot;rounds&quot;?12:key===&quot;start&quot;?120:key===&quot;months&quot;||key===&quot;sharedMonths&quot;||key===&quot;free&quot;?120:[&quot;lines&quot;,&quot;dCards&quot;,&quot;pCards&quot;].includes(key)?1000:99999999;
 const readInt=(el,max=Number(el.max))=&gt;Math.min(max,Math.max(0,Math.trunc(Number(el.value)||0)));
 function estimate(owners,others,licenses){
  const users=owners+others;
@@ -204,17 +227,18 @@ function estimate(owners,others,licenses){
 function calculate(data,extra,exclude,months){
  const carriers=data.map(row=&gt;{
   const monthly=Math.max(0,row.base-row.discount);
-  const perIncome=row.cb+row.sold;
   const duration=months??row.months;
-  const perCost=monthly*duration+Math.max(0,duration-row.free)*row.ongoing+row.fee+row.option+row.first+row.cancel+row.purchase;
+  const paid=parent.calculateMnpBenefit(row.cb,row.rounds,row.start+1,row.firstAmount,duration+1);
+  const perIncome=paid+row.sold;
+  const perCost=monthly*duration+Math.max(0,duration-row.free)*row.ongoing+row.fee+row.option+row.first+row.cancel+row.purchase+row.sourceCost+row.arrangePerLine;
   const perNet=perIncome-perCost;
   const omitted=row.skip?&quot;manual&quot;:exclude&amp;&amp;perNet&lt;0&amp;&amp;row.lines&gt;0?&quot;loss&quot;:&quot;&quot;;
   const lines=omitted?0:row.lines;
-  return {monthly,perCost,perNet,omitted,lines,income:perIncome*lines,cost:perCost*lines,net:perNet*lines};
+  return {monthly,perCost,perNet,omitted,lines,paid,remaining:row.cb-paid,benefits:paid*lines,unreceived:(row.cb-paid)*lines,income:perIncome*lines,cost:perCost*lines,net:perNet*lines};
  });
  const sum=key=&gt;carriers.reduce((total,row)=&gt;total+row[key],0);
- const shared=extra.sharedMonthly*(months??extra.sharedMonths)+extra.sharedOnce+extra.dAnnual*extra.dCards+extra.pAnnual*extra.pCards;
- return {carriers,shared,income:sum(&quot;income&quot;),cost:sum(&quot;cost&quot;)+shared,net:sum(&quot;net&quot;)-shared,lines:sum(&quot;lines&quot;)};
+ const shared=extra.sharedMonthly*(months??extra.sharedMonths)+extra.sharedOnce+extra.arrangeOnce+extra.dAnnual*extra.dCards+extra.pAnnual*extra.pCards;
+ return {carriers,shared,benefits:sum(&quot;benefits&quot;),unreceived:sum(&quot;unreceived&quot;),income:sum(&quot;income&quot;),cost:sum(&quot;cost&quot;)+shared,net:sum(&quot;net&quot;)-shared,lines:sum(&quot;lines&quot;)};
 }
 function field(id,label,key,value=&quot;&quot;){
  return &#x27;&lt;label for=&quot;&#x27;+id+&#x27;&quot;&gt;&#x27;+label+&#x27;&lt;input id=&quot;&#x27;+id+&#x27;&quot; type=&quot;number&quot; min=&quot;0&quot; max=&quot;&#x27;+maxFor(key)+&#x27;&quot; step=&quot;1&quot; inputmode=&quot;numeric&quot; value=&quot;&#x27;+value+&#x27;&quot;&gt;&lt;/label&gt;&#x27;;
@@ -245,8 +269,8 @@ function init(){
  $(&quot;estimates&quot;).innerHTML=names.map((name,i)=&gt;&#x27;&lt;div class=&quot;metric&quot;&gt;&lt;small&gt;&#x27;+name+&#x27;&lt;/small&gt;&lt;strong id=&quot;estimate-&#x27;+i+&#x27;&quot;&gt;&lt;/strong&gt;&#x27;+field(&quot;planned-&quot;+i,&quot;試算する回線数&quot;,&quot;lines&quot;)+&#x27;&lt;label class=&quot;omit-check&quot;&gt;&lt;input type=&quot;checkbox&quot; id=&quot;skip-&#x27;+i+&#x27;&quot;&gt;計算から除外&lt;/label&gt;&lt;/div&gt;&#x27;).join(&quot;&quot;);
  $(&quot;common&quot;).innerHTML=inputs.filter(([key])=&gt;key!==&quot;lines&quot;).map(([key,label])=&gt;field(&quot;common-&quot;+key,label,key)).join(&quot;&quot;);
  $(&quot;extras&quot;).innerHTML=extraInputs.map(([key,label])=&gt;field(key,label,key,extraDefaults[key])).join(&quot;&quot;);
- $(&quot;carriers&quot;).innerHTML=names.map((name,i)=&gt;&#x27;&lt;article class=&quot;card&quot; style=&quot;--accent:&#x27;+colors[i]+&#x27;&quot;&gt;&lt;h3&gt;&#x27;+name+&#x27;&lt;/h3&gt;&lt;p class=&quot;plan&quot;&gt;&#x27;+optionHints[i]+&#x27;&lt;br&gt;&#x27;+discountHints[i]+&#x27;&lt;br&gt;&lt;a href=&quot;&#x27;+planLinks[i]+&#x27;&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;公式料金&lt;/a&gt;&#x27;+(offerLinks[i]?&#x27; ／ &lt;a href=&quot;&#x27;+offerLinks[i]+&#x27;&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;公式オンライン特典&lt;/a&gt;&#x27;:&#x27;&#x27;)+&#x27;&lt;/p&gt;&lt;label for=&quot;plan-&#x27;+i+&#x27;&quot;&gt;料金プラン&lt;select id=&quot;plan-&#x27;+i+&#x27;&quot;&gt;&#x27;+plans[i].map(([label],index)=&gt;&#x27;&lt;option value=&quot;&#x27;+index+&#x27;&quot;&gt;&#x27;+label+&#x27;&lt;/option&gt;&#x27;).join(&quot;&quot;)+&#x27;&lt;/select&gt;&lt;/label&gt;&lt;label for=&quot;channel-&#x27;+i+&#x27;&quot;&gt;申込窓口&lt;select id=&quot;channel-&#x27;+i+&#x27;&quot;&gt;&lt;option value=&quot;store&quot;&gt;店頭&lt;/option&gt;&lt;option value=&quot;web&quot;&gt;公式オンライン&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;&lt;div class=&quot;subtotal&quot;&gt;キャリア別の手残り&lt;strong id=&quot;net-&#x27;+i+&#x27;&quot;&gt;&lt;/strong&gt;&lt;/div&gt;&#x27;+inputs.map(([key,label])=&gt;field(i+&quot;-&quot;+key,label,key,defaults[i][key])).join(&quot;&quot;)+&#x27;&lt;dl id=&quot;details-&#x27;+i+&#x27;&quot;&gt;&lt;/dl&gt;&lt;/article&gt;&#x27;).join(&quot;&quot;);
- $(&quot;tablehead&quot;).innerHTML=&#x27;&lt;tr&gt;&lt;th scope=&quot;col&quot;&gt;維持月数&lt;/th&gt;&#x27;+names.map(name=&gt;&#x27;&lt;th scope=&quot;col&quot;&gt;&#x27;+name+&#x27;&lt;/th&gt;&#x27;).join(&quot;&quot;)+&#x27;&lt;th scope=&quot;col&quot;&gt;全体の手残り&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;利益率&lt;/th&gt;&lt;/tr&gt;&#x27;;
+ $(&quot;carriers&quot;).innerHTML=names.map((name,i)=&gt;&#x27;&lt;article class=&quot;card&quot; style=&quot;--accent:&#x27;+colors[i]+&#x27;&quot;&gt;&lt;h3&gt;&#x27;+name+&#x27;&lt;/h3&gt;&lt;p class=&quot;plan&quot;&gt;&#x27;+optionHints[i]+&#x27;&lt;br&gt;&#x27;+discountHints[i]+&#x27;&lt;br&gt;&lt;a href=&quot;&#x27;+planLinks[i]+&#x27;&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;公式料金&lt;/a&gt;&#x27;+(offerLinks[i]?&#x27; ／ &lt;a href=&quot;&#x27;+offerLinks[i]+&#x27;&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;公式オンライン特典&lt;/a&gt;&#x27;:&#x27;&#x27;)+&#x27;&lt;/p&gt;&lt;label for=&quot;plan-&#x27;+i+&#x27;&quot;&gt;料金プラン&lt;select id=&quot;plan-&#x27;+i+&#x27;&quot;&gt;&#x27;+plans[i].map(([label],index)=&gt;&#x27;&lt;option value=&quot;&#x27;+index+&#x27;&quot;&gt;&#x27;+label+&#x27;&lt;/option&gt;&#x27;).join(&quot;&quot;)+&#x27;&lt;/select&gt;&lt;/label&gt;&lt;label for=&quot;channel-&#x27;+i+&#x27;&quot;&gt;申込窓口&lt;select id=&quot;channel-&#x27;+i+&#x27;&quot;&gt;&lt;option value=&quot;store&quot;&gt;店頭&lt;/option&gt;&lt;option value=&quot;web&quot;&gt;公式オンライン&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;&lt;div class=&quot;subtotal&quot;&gt;キャリア別の手残り&lt;strong id=&quot;net-&#x27;+i+&#x27;&quot;&gt;&lt;/strong&gt;&lt;/div&gt;&#x27;+inputs.map(([key,label])=&gt;field(i+&quot;-&quot;+key,label,key,defaults[i][key])).join(&quot;&quot;)+benefitInputs.map(([key,label,value])=&gt;field(i+&quot;-&quot;+key,label,key,value)).join(&quot;&quot;)+&#x27;&lt;dl id=&quot;details-&#x27;+i+&#x27;&quot;&gt;&lt;/dl&gt;&lt;/article&gt;&#x27;).join(&quot;&quot;);
+ $(&quot;tablehead&quot;).innerHTML=&#x27;&lt;tr&gt;&lt;th scope=&quot;col&quot;&gt;維持月数&lt;/th&gt;&#x27;+names.map(name=&gt;&#x27;&lt;th scope=&quot;col&quot;&gt;&#x27;+name+&#x27;&lt;/th&gt;&#x27;).join(&quot;&quot;)+&#x27;&lt;th scope=&quot;col&quot;&gt;全体の手残り&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;受取還元&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;未受取還元&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;利益率&lt;/th&gt;&lt;/tr&gt;&#x27;;
 }
 function refresh(){
  const owners=readInt($(&quot;owners&quot;));
@@ -263,6 +287,10 @@ function refresh(){
   const lineInput=$(i+&quot;-lines&quot;);
   if(document.activeElement!==lineInput)lineInput.value=planned.value;
   const row=Object.fromEntries(inputs.map(([key])=&gt;[key,readInt($(i+&quot;-&quot;+key))]));
+  row.rounds=readInt($(i+&quot;-rounds&quot;))||1;
+  row.start=readInt($(i+&quot;-start&quot;));
+  const firstAmount=$(i+&quot;-firstAmount&quot;);
+  row.firstAmount=firstAmount.value===&quot;&quot;?null:readInt(firstAmount);
   row.lines=readInt(planned);
   row.skip=$(&quot;skip-&quot;+i).checked;
   return row;
@@ -271,18 +299,18 @@ function refresh(){
  const result=calculate(data,extra,exclude);
  metrics($(&quot;metrics&quot;),[[&quot;実質手残り&quot;,&#x27;&lt;span class=&quot;&#x27;+tone(result.net)+&#x27;&quot;&gt;&#x27;+money(result.net)+&#x27;&lt;/span&gt;&#x27;,&quot;primary&quot;],[&quot;受取総額&quot;,money(result.income)],[&quot;総費用&quot;,money(result.cost)],[&quot;利益率&quot;,percent(result.net,result.income)]]);
  const unconfirmed=names.filter((_,i)=&gt;result.carriers[i].lines&gt;0&amp;&amp;$(i+&quot;-cb&quot;).value===&quot;&quot;);
- $(&quot;summary-note&quot;).textContent=&quot;試算対象 &quot;+result.lines+&quot;回線 ／ 共通費用 &quot;+money(result.shared)+(unconfirmed.length?&quot; ／ 還元未入力（0円で仮計算） &quot;+unconfirmed.join(&quot;・&quot;):&quot;&quot;);
+ $(&quot;summary-note&quot;).textContent=&quot;試算対象 &quot;+result.lines+&quot;回線 ／ 受取還元 &quot;+money(result.benefits)+&quot; ／ 未受取還元 &quot;+money(result.unreceived)+&quot;回線 ／ 共通費用 &quot;+money(result.shared)+(unconfirmed.length?&quot; ／ 還元未入力（0円で仮計算） &quot;+unconfirmed.join(&quot;・&quot;):&quot;&quot;);
  result.carriers.forEach((row,i)=&gt;{
   const el=$(&quot;net-&quot;+i);
   el.className=tone(row.net);
   el.textContent=row.omitted===&quot;manual&quot;?&quot;計算から除外&quot;:row.omitted===&quot;loss&quot;?&quot;赤字のため除外&quot;:money(row.net)+&quot; ／ &quot;+row.lines+&quot;回線&quot;;
-  const values=[[&quot;割引後の月額&quot;,money(row.monthly)],[&quot;費用／回線&quot;,money(row.perCost)],[&quot;手残り／回線&quot;,money(row.perNet)],[&quot;受取総額&quot;,money(row.income)],[&quot;利益率&quot;,percent(row.net,row.income)]];
+  const values=[[&quot;割引後の月額&quot;,money(row.monthly)],[&quot;受取還元／回線&quot;,money(row.paid)],[&quot;未受取還元／回線&quot;,money(row.remaining)],[&quot;費用／回線&quot;,money(row.perCost)],[&quot;手残り／回線&quot;,money(row.perNet)],[&quot;受取総額&quot;,money(row.income)],[&quot;利益率&quot;,percent(row.net,row.income)]];
   $(&quot;details-&quot;+i).innerHTML=values.map(([label,val])=&gt;&quot;&lt;div&gt;&lt;dt&gt;&quot;+label+&quot;&lt;/dt&gt;&lt;dd&gt;&quot;+val+&quot;&lt;/dd&gt;&lt;/div&gt;&quot;).join(&quot;&quot;);
  });
  $(&quot;tablebody&quot;).innerHTML=Array.from({length:12},(_,i)=&gt;{
   const scenario=calculate(data,extra,exclude,i+1);
   const cells=scenario.carriers.map(row=&gt;&#x27;&lt;td class=&quot;&#x27;+tone(row.net)+&#x27;&quot;&gt;&#x27;+(row.omitted?&quot;除外&quot;:money(row.net))+&#x27;&lt;/td&gt;&#x27;);
-  return &#x27;&lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;&#x27;+(i+1)+&#x27;か月&lt;/th&gt;&#x27;+cells.join(&quot;&quot;)+&#x27;&lt;td class=&quot;&#x27;+tone(scenario.net)+&#x27;&quot;&gt;&#x27;+money(scenario.net)+&#x27;&lt;/td&gt;&lt;td&gt;&#x27;+percent(scenario.net,scenario.income)+&#x27;&lt;/td&gt;&lt;/tr&gt;&#x27;;
+  return &#x27;&lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;&#x27;+(i+1)+&#x27;か月&lt;/th&gt;&#x27;+cells.join(&quot;&quot;)+&#x27;&lt;td class=&quot;&#x27;+tone(scenario.net)+&#x27;&quot;&gt;&#x27;+money(scenario.net)+&#x27;&lt;/td&gt;&lt;td&gt;&#x27;+money(scenario.benefits)+&#x27;&lt;/td&gt;&lt;td&gt;&#x27;+money(scenario.unreceived)+&#x27;&lt;/td&gt;&lt;td&gt;&#x27;+percent(scenario.net,scenario.income)+&#x27;&lt;/td&gt;&lt;/tr&gt;&#x27;;
  }).join(&quot;&quot;);
 }
 init();
@@ -347,12 +375,7 @@ $(&quot;reset&quot;).addEventListener(&quot;click&quot;,()=&gt;{
  if(!window.confirm(&quot;入力を初期値に戻しますか？&quot;))return;
  $(&quot;owners&quot;).value=2;
  $(&quot;users&quot;).value=2;
- $(&quot;documents&quot;).replaceChildren();
- docChoices.length=0;
  editedLines.clear();
- $(&quot;exclude&quot;).checked=false;
- $(&quot;apply-status&quot;).textContent=&quot;&quot;;
- init();
  refresh();
 });
 &lt;/script&gt;&lt;/body&gt;&lt;/html&gt;
@@ -619,6 +642,7 @@ function renderLine(line, groupId){
             <option value="181" ${line.keepDaysSel=='181'?"selected":""}>181日</option>
             <option value="211" ${line.keepDaysSel=='211'?"selected":""}>211日</option>
             <option value="365" ${line.keepDaysSel=='365'?"selected":""}>365日</option>
+            <option value="year" ${line.keepDaysSel=='year'?"selected":""}>12か月（契約日の1年後まで）</option>
             <option value="custom" ${line.keepDaysSel=='custom'?"selected":""}>自由入力</option>
           </select>
         </div>
@@ -664,7 +688,13 @@ function renderLine(line, groupId){
       <button class="btn gray sm" data-act="addExpense" data-line="${line.id}">＋ 経費行を追加</button>
 
       <h3>🎯 キャッシュバック（1回線あたり）</h3>
-      <div class="row"><div><input type="number" class="f-cashback" value="${line.cashback||0}"></div></div>
+      <div class="row">
+        <div><label>還元総額（円）<input type="number" class="f-cashback" value="${line.cashback||0}"></label></div>
+        <div><label>毎月の付与回数（1＝一括）<input type="number" class="f-benefit-rounds" min="1" max="12" step="1" value="${Number(line.benefitRounds)||1}"></label></div>
+        <div><label>初回の付与月（0＝契約時）<input type="number" class="f-benefit-start" min="0" step="1" value="${Number(line.benefitStart)||0}"></label></div>
+        <div><label>初回の付与額（任意）<input type="number" class="f-benefit-first" min="0" step="1" value="${esc(String(line.benefitFirst ?? ""))}"></label></div>
+      </div>
+      <p class="note">初回の付与月は契約日からの経過で数えます。例：2月15日契約なら1か月目の付与日は3月15日。初回の付与額を空欄にすると均等配分し、入力すると残りを均等配分します。端数は前の月から配ります。分割・後日付与の試算には契約日と維持期間を入力してください。付与日当日に解約する場合も受取に含める試算です。</p>
 
       <details class="opts">
         <summary>📅 月別内訳を見る</summary>
@@ -740,7 +770,13 @@ function computeLine(line){
   const contract = parseISO(line.contractDate);
   const keepDays = computeKeepDays(line);
   let cancelDate = null;
-  if(contract && keepDays>0){ cancelDate = addDays(contract, keepDays-1); }
+  if (contract && line.keepDaysSel === "year") {
+    const year = contract.getFullYear()+1;
+    const month = contract.getMonth();
+    cancelDate = new Date(year, month, Math.min(contract.getDate(), daysInMonth(year, month+1)));
+  } else if (contract && keepDays > 0) {
+    cancelDate = addDays(contract, keepDays-1);
+  }
 
   const months = [];
   if(contract && cancelDate){
@@ -815,13 +851,24 @@ function computeLine(line){
   const cancelFee = Number(line.cancelFee)||0;
 
   const totalCost = monthlyPlanOptSum + setupFee + universalFee + cancelFee + expenseSum;
-  const cashback = Number(line.cashback)||0;
+  const totalBenefit = Number(line.cashback)||0;
+  const benefitStart = Math.max(0, Math.trunc(Number(line.benefitStart)||0));
+  let elapsedMonths = 0;
+  if (cancelDate) {
+    elapsedMonths = (cancelDate.getFullYear() - contract.getFullYear()) * 12
+      + cancelDate.getMonth() - contract.getMonth();
+    const dueDay = Math.min(contract.getDate(), daysInMonth(cancelDate.getFullYear(), cancelDate.getMonth()+1));
+    if (cancelDate.getDate() < dueDay) elapsedMonths--;
+  }
+  const cashback = calculateMnpBenefit(totalBenefit, line.benefitRounds, benefitStart+1,
+    line.benefitFirst, elapsedMonths+1);
+  const unreceived = totalBenefit - cashback;
   const profitPerLine = cashback - totalCost;
   const count = Number(line.count)||1;
   const profitTotal = profitPerLine * count;
 
   return { months: monthlyRows, totalMonths, planTotal, optionTotal, discountTotalSum, universalFee, expenseSum, setupFee, cancelFee,
-           totalCost, cashback, profitPerLine, count, profitTotal, cancelDate };
+           totalCost, cashback, unreceived, profitPerLine, count, profitTotal, cancelDate };
 }
 
 // ---------- DOMから値を読んでlineオブジェクトを再構成 ----------
@@ -852,6 +899,9 @@ function readLineFromDOM(el){
     firstMonth: g('.f-firstmonth').value, lastMonth: g('.f-lastmonth').value, cancelFee: Number(g('.f-cancelfee').value)||0,
     plans: plans.length?plans:[{id:newId('plan'),name:'',price:0,from:1}], options, discounts, expenses,
     cashback: Number(g('.f-cashback').value)||0,
+    benefitRounds: Number(g('.f-benefit-rounds').value)||1,
+    benefitStart: Number(g('.f-benefit-start').value)||0,
+    benefitFirst: g('.f-benefit-first').value,
   };
 }
 function readGroupFromDOM(el){
@@ -902,7 +952,7 @@ function recalcAll(){
       rb.className = "result-box " + (r.profitPerLine>=0?"plus":"minus");
       rb.innerHTML = `
         通信費合計：¥${yen(r.totalCost)}（月額計¥${yen(r.planTotal+r.optionTotal-r.discountTotalSum)}／初期費用¥${yen(r.setupFee)}／ユニバーサルサービス料¥${yen(r.universalFee)}／解約金¥${yen(r.cancelFee)}／経費¥${yen(r.expenseSum)}）<br>
-        キャッシュバック：¥${yen(r.cashback)}<br>
+        受取見込み還元：¥${yen(r.cashback)} ／ 未受取還元：¥${yen(r.unreceived)}<br>
         <b>手残り利益（1回線あたり）：${r.profitPerLine>=0?"+":""}¥${yen(r.profitPerLine)}</b>${line.count>1?`<br><b>回線利益合計（${line.count}回線）：${r.profitTotal>=0?"+":""}¥${yen(r.profitTotal)}</b>`:""}`;
 
       rankItems.push({group:g.name, carrier:line.carrier, plan:planNames||"(未設定)", per:r.profitPerLine, count:line.count, total:r.profitTotal});
@@ -1112,7 +1162,7 @@ function loadData(data){
       options:(l.options||[]).map(o=>({...o,id:o.id||newId('opt')})),
       discounts:(l.discounts||[]).map(d=>({...d,id:d.id||newId('dis')})),
       expenses:(l.expenses||[]).map(x=>({...x,id:x.id||newId('exp')})),
-      cashback:l.cashback||0, open:true,
+      cashback:l.cashback||0, benefitRounds:l.benefitRounds||1, benefitStart:l.benefitStart||0, benefitFirst:l.benefitFirst??"", open:true,
     }))
   }));
   if(state.groups.length===0) state.groups.push(newGroup());
